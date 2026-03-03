@@ -27,6 +27,7 @@ const emptyFilters: Filters = {
   minPrice: "",
   maxPrice: "",
   sort: "featured",
+  search: "",
 };
 
 function filtersFromParams(params: URLSearchParams): Filters {
@@ -44,6 +45,7 @@ function filtersFromParams(params: URLSearchParams): Filters {
     minPrice: params.get("min") ?? "",
     maxPrice: params.get("max") ?? "",
     sort: validSort,
+    search: params.get("search") ?? "",
   };
 }
 
@@ -55,6 +57,7 @@ function filtersToParams(filters: Filters): string {
   if (filters.minPrice) p.set("min", filters.minPrice);
   if (filters.maxPrice) p.set("max", filters.maxPrice);
   if (filters.sort !== "featured") p.set("sort", filters.sort);
+  if (filters.search) p.set("search", filters.search);
   const str = p.toString();
   return str ? `?${str}` : "";
 }
@@ -90,6 +93,14 @@ export default function ProductsContent() {
 
   const results = useMemo(() => {
     const filtered = products.filter((p) => {
+      if (filters.search) {
+        const q = filters.search.toLowerCase();
+        const matches =
+          p.name.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q);
+        if (!matches) return false;
+      }
       if (filters.category && p.category !== filters.category) return false;
       if (
         filters.sizes.length > 0 &&
@@ -134,6 +145,12 @@ export default function ProductsContent() {
 
   const activeTags = useMemo(() => {
     const tags: { label: string; remove: () => void }[] = [];
+    if (filters.search) {
+      tags.push({
+        label: `"${filters.search}"`,
+        remove: () => setFilters({ ...filters, search: "" }),
+      });
+    }
     if (filters.category) {
       const cat = filters.category;
       tags.push({

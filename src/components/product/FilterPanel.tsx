@@ -11,6 +11,7 @@ export type Filters = {
   minPrice: string;
   maxPrice: string;
   sort: SortOption;
+  search: string;
 };
 
 type FilterPanelProps = {
@@ -129,6 +130,7 @@ export default function FilterPanel({
       minPrice: "",
       maxPrice: "",
       sort: filters.sort,
+      search: "",
     });
   }
 
