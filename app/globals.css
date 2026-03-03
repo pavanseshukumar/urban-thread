@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-surface: var(--surface);
+  --color-faint: var(--faint);
+  --color-dimmed: var(--dimmed);
+  --font-sans: var(--font-geist-sans);
+}
+
+:root {
+  --bg: #fafaf9;
+  --fg: #111111;
+  --muted: #737373;
+  --subtle: #e8e6e3;
+  --surface: #ffffff;
+  --faint: #f0efed;
+  --dimmed: #999999;
+}
+
+.dark {
+  --bg: #0f0f10;
+  --fg: #e0ddd8;
+  --muted: #8a8880;
+  --subtle: #232225;
+  --surface: #18181a;
+  --faint: #1c1c1e;
+  --dimmed: #6b6860;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-stagger-in {
+  animation: stagger-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
