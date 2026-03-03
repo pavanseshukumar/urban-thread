@@ -245,10 +245,14 @@ export default function ProductsContent() {
                         sort: e.target.value as SortOption,
                       })
                     }
-                    className="appearance-none border-b border-subtle bg-transparent pb-1 pr-6 text-[11px] uppercase tracking-[0.12em] text-foreground outline-none transition-colors duration-200 focus:border-foreground"
+                    className="appearance-none border-b border-subtle bg-surface px-2 pb-2 pt-1 pr-7 text-[11px] uppercase tracking-[0.12em] text-foreground outline-none transition-colors duration-200 focus:border-foreground"
                   >
                     {SORT_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
+                      <option
+                        key={opt.value}
+                        value={opt.value}
+                        className="bg-surface px-3 py-2 text-foreground"
+                      >
                         {opt.label}
                       </option>
                     ))}
