@@ -5,6 +5,7 @@ import { Product } from "@/src/types/product";
 import { useCart } from "@/src/store/useCart";
 import Button from "@/src/components/ui/Button";
 import ImageGallery from "@/src/components/product/ImageGallery";
+import WishlistButton from "@/src/components/product/WishlistButton";
 
 export default function ProductDetail({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -34,9 +35,12 @@ export default function ProductDetail({ product }: { product: Product }) {
           <p className="text-[11px] uppercase tracking-[0.2em] text-dimmed">
             {product.category}&apos;s collection
           </p>
-          <h1 className="mt-3 text-[28px] font-normal tracking-tight text-foreground sm:text-[34px]">
-            {product.name}
-          </h1>
+          <div className="mt-3 flex items-start justify-between gap-4">
+            <h1 className="text-[28px] font-normal tracking-tight text-foreground sm:text-[34px]">
+              {product.name}
+            </h1>
+            <WishlistButton product={product} size={22} className="mt-2 shrink-0" />
+          </div>
           <p className="mt-4 text-[18px] font-light tabular-nums text-muted">
             ${product.price}
           </p>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Product } from "@/src/types/product";
 import Modal from "@/src/components/ui/Modal";
 import QuickView from "./QuickView";
+import WishlistButton from "./WishlistButton";
 
 export default function ProductCard({ product }: { product: Product }) {
   const [quickOpen, setQuickOpen] = useState(false);
@@ -30,6 +31,14 @@ export default function ProductCard({ product }: { product: Product }) {
                 className="object-cover transition-all duration-700 ease-out opacity-0 group-hover:scale-[1.03] group-hover:opacity-100"
               />
             )}
+
+            <div className="absolute right-3 top-3 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <WishlistButton
+                product={product}
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-surface/80 shadow-sm backdrop-blur-sm dark:bg-surface/70"
+                size={15}
+              />
+            </div>
 
             <div className="absolute inset-x-0 bottom-0 flex justify-center pb-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <button

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { cartStore } from "@/src/store/cartStore";
+import { wishlistStore } from "@/src/store/wishlistStore";
 import CartDrawer from "@/src/components/cart/CartDrawer";
 import SearchOverlay from "@/src/components/product/SearchOverlay";
 import MegaMenu, { columns } from "./MegaMenu";
@@ -16,6 +17,7 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [mobileShopOpen, setMobileShopOpen] = useState(false);
@@ -80,9 +82,20 @@ export default function Navbar() {
   useEffect(() => {
     cartStore.init();
     setCartCount(cartStore.getTotalItems());
-    return cartStore.subscribe(() => {
+    const unsubCart = cartStore.subscribe(() => {
       setCartCount(cartStore.getTotalItems());
     });
+
+    wishlistStore.init();
+    setWishlistCount(wishlistStore.getTotalItems());
+    const unsubWish = wishlistStore.subscribe(() => {
+      setWishlistCount(wishlistStore.getTotalItems());
+    });
+
+    return () => {
+      unsubCart();
+      unsubWish();
+    };
   }, []);
 
   useEffect(() => {
@@ -181,6 +194,31 @@ export default function Navbar() {
               </div>
 
               <ThemeToggle />
+
+              <a
+                href="/wishlist"
+                aria-label="Wishlist"
+                className="relative text-muted transition-colors duration-300 hover:text-foreground"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+                {wishlistCount > 0 && (
+                  <span className="absolute -right-1.5 -top-1.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-foreground text-[9px] font-medium text-background">
+                    {wishlistCount}
+                  </span>
+                )}
+              </a>
 
               <button
                 onClick={() => setCartOpen(true)}

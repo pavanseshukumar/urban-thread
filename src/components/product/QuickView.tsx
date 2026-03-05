@@ -5,6 +5,7 @@ import { Product } from "@/src/types/product";
 import { useCart } from "@/src/store/useCart";
 import Button from "@/src/components/ui/Button";
 import ImageGallery from "./ImageGallery";
+import WishlistButton from "./WishlistButton";
 
 type QuickViewProps = {
   product: Product;
@@ -41,9 +42,12 @@ export default function QuickView({ product, onClose }: QuickViewProps) {
         <p className="text-[11px] uppercase tracking-[0.2em] text-dimmed">
           {product.category}&apos;s collection
         </p>
-        <h2 className="mt-2 text-[22px] font-normal tracking-tight text-foreground sm:text-[26px]">
-          {product.name}
-        </h2>
+        <div className="mt-2 flex items-start justify-between gap-3">
+          <h2 className="text-[22px] font-normal tracking-tight text-foreground sm:text-[26px]">
+            {product.name}
+          </h2>
+          <WishlistButton product={product} size={19} className="mt-1 shrink-0" />
+        </div>
         <p className="mt-3 text-[16px] font-light tabular-nums text-muted">
           ${product.price}
         </p>
